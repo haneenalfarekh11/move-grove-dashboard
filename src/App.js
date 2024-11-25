@@ -5,7 +5,7 @@ import Dashboard from './Pages/Dashboard';
 import AllTrips from './Pages/AllTrips'; 
 import './App.css';
 
-// hi haneen
+
 function App() {
   return (
     <div className="App">

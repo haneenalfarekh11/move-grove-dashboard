@@ -1,19 +1,6 @@
-// import React from 'react'
-
-// const DashCard = ({ title, onClick }) => {
-//   return (
-//     <div className='w-80 h-32 bg-white shadow-md shadow-gray-300 rounded-md flex justify-center items-center gap-4'>
-       
-//         <div className='w-[70%] text-left'>
-//             <p className='text-gray-500 text-sm'>{title}</p>
-//         </div>
-//     </div>
-//   )
-// }
-// export default DashCard 
 import React from 'react';
 
-const DashCard = ({ title, onClick, time, price }) => {
+const DashCard = ({ title, onClick, time, price , date }) => {
   return (
     <div 
       className='w-80 h-32 bg-white shadow-md shadow-gray-300 rounded-md flex justify-center items-center gap-4 cursor-pointer hover:shadow-xl' 
@@ -24,6 +11,7 @@ const DashCard = ({ title, onClick, time, price }) => {
         <p className='text-gray-500 text-sm'>{title}</p>
         {time && <p className='text-gray-400 text-xs'>{time}</p>}  {/* عرض الوقت إذا كان موجودًا */}
         {price && <p className='text-gray-600 text-sm font-semibold'>{price}</p>} {/* عرض السعر إذا كان موجودًا */}
+        {date && <p className='text-gray-400 text-xs' >{date}</p>}
       </div>
     </div>
   );

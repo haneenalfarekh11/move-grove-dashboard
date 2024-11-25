@@ -1,20 +1,33 @@
 import React, { useState } from 'react';
+// import { Routes, Route } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import Sidebar from '../Components/Sidebar';
 import DashCard from '../Components/DashCard';
 import { BsFillStarFill } from "react-icons/bs";
 
 const Dashboard = () => {
     const [open, setOpen] = useState(false); // التحكم في Sidebar
-    const [showModal, setShowModal] = useState(false); // فتح نموذج إضافة سيارة
+    const [showCarModal, setShowCarModal] = useState(false); // فتح نموذج إضافة سيارة
+    const [showTripModal, setShowTripModal] = useState(false);
     const [carName, setCarName] = useState(''); 
     const [carNumber, setCarNumber] = useState('');
     const [carColor, setCarColor] = useState('');
-    const [selectedTrip, setSelectedTrip] = useState(null); // حالة تفاصيل الرحلة
+    const [tripTitle, setTripTitle] = useState('');
+    const [tripTime, setTripTime] = useState('');
+    const [tripPrice, setTripPrice] = useState('');
+    const [tripDate, setTripDate] = useState('');
+    const [selectedTrip, setSelectedTrip] = useState(null); //  حالة تفاصيل الرحلة
+    const [selectedUser, setSelectedUser] = useState(null);
     const [users, setUsers] = useState([ // بيانات المستخدمين المتفاعلين
-        { id: 1, name: 'Haneen Alfarekh ', phone: '0997876643', userStatus: '??' },
-        { id: 2, name: 'Salam Alshikh', phone: '0993764563',userStatus : '??' },
-        { id: 3, name: 'Lana Lababidy', phone: '0938744213', userStatus: '??' },
+        { id: 1, name: 'Haneen Alfarekh ', phone: '0997876643', userStatus: '??',address: 'Damascus', carNumber: '12345', registrationDate: '2022-1-01' },
+        { id: 2, name: 'Salam Alshikh', phone: '0993764563',userStatus : '??',address: 'Homs', carNumber: '12989', registrationDate: '2022-2-15' },
+        { id: 3, name: 'Lana Lababidy', phone: '0938744213', userStatus: '??',address: 'Aleppo', carNumber: '87652', registrationDate: '2022-8-20' },
         
+    ]);
+    const [trips, setTrips] = useState([ // بيانات الرحلات
+        { title: 'From Damascus To Homs', time: '9:00 AM', price: '200000', date: '2024/2/13' },
+        { title: 'From Damascus To Hama', time: '10:00 AM', price: '150000', date: '2024/2/20' },
+        { title: 'From Damascus To Tartous', time: '12:00 PM', price: '180000', date: '2024/2/25' },
     ]);
 
     // دالة لفتح تفاصيل الرحلة
@@ -24,7 +37,9 @@ const Dashboard = () => {
 
     // دالة لعرض تفاصيل المستخدم
     const handleUserView = (user) => {
-        console.log('View user:', user); // منطق عرض تفاصيل المستخدم
+        // console.log('View user:', user); // منطق عرض تفاصيل المستخدم
+        setSelectedUser(user); // تحديث حالة المستخدم المحدد لعرض تفاصيله
+        setShowCarModal(false); // فتح نافذة التفاصيل
     };
 
     // دالة لتعديل المستخدم
@@ -35,6 +50,21 @@ const Dashboard = () => {
     // دالة لحظر المستخدم
     const handleUserBlock = (user) => {
         console.log('Block user:', user); // منطق حظر المستخدم
+    };
+    // دالة لإضافة رحلة جديدة
+    const handleAddTrip = () => {
+        const newTrip = {
+            title: tripTitle,
+            time: tripTime,
+            price: tripPrice,
+            date: tripDate,
+        };
+        setTrips([...trips, newTrip]); // إضافة الرحلة إلى قائمة الرحلات
+        setShowTripModal(false); // إغلاق نموذج إضافة الرحلة
+        setTripTitle(''); // إعادة تعيين القيم
+        setTripTime('');
+        setTripPrice('');
+        setTripDate('');
     };
 
     return (
@@ -51,32 +81,34 @@ const Dashboard = () => {
                     <h1 className='text-3xl font-semibold'>Dashboard</h1>
                     <p className='text-xl font-thin'>Welcome to your dashboard</p>
                 </div>
-
+                
                 {/* Add Car Button */}
                 <button 
-                    onClick={() => setShowModal(true)} // فتح النموذج لإضافة سيارة
-                    className='px-4 py-2 bg-blue-500 text-white rounded-md shadow-lg hover:bg-blue-700'>
+                    onClick={() => setShowCarModal(true)} // فتح النموذج لإضافة سيارة
+                    className='px-4 py-2 bg-yellow-500 text-white rounded-md shadow-lg hover:bg-yellow-700'>
                     Add Car
                 </button>
-
-                {/* Search Bar */}
-                <div className='w-[100%] flex justify-end items-center fixed top-0 right-0 p-4'>
-                    <input type='text' placeholder='Search' className='w-80 outline-none p-2 text-left rounded-lg border-2 border-gray-600 bg-yellow-100 text-gray-600 placeholder:text-gray-600' />
-                </div>
+                {/* add trip button*/}
+                <div className='fixed top-0 right-0 p-4'></div>
+                <button
+                    onClick={() => setShowTripModal(true)}
+                    className='px-4 py-2 bg-yellow-500 text-white rounded-md shadow-lg hover:bg-yellow-700 ml-auto '>
+                    Add Trip
+                </button>
 
                 {/* Cards Section */}
                 <div className='w-[90%] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8'>
-                  <DashCard title={'From Damascus To Homs'} onClick={() => handleTripClick({ title: 'From Damascus To Homs', time: '9:00 AM', price: '200000' })} />
-                  <DashCard title={'From Damascus To Hama'} onClick={() => handleTripClick({ title: 'From Damascus To Hama', time: '10:00 AM', price: '150000' })} />
-                  <DashCard title={'From Damascus To Tartous'} onClick={() => handleTripClick({ title: 'From Damascus To Tartous', time: '12:00 PM', price: '180000' })} />
-                  <DashCard title={'From Damascus To Aleppo'} onClick={() => handleTripClick({ title: 'From Damascus To Aleppo', time: '1:00 PM', price: '100000' })} />
-                  <DashCard title={'From Aleppo To Homs'} onClick={() => handleTripClick({ title: 'From Aleppo To Homs', time: '2:00 PM', price: '350000' })} />
-                  <DashCard title={'From Tartous To Damascus'} onClick={() => handleTripClick({ title: 'From Tartous To Damascus', time: '4:00 PM', price: '250000' })} />
-                  <DashCard title={'From Hama To Homs'} onClick={() => handleTripClick({ title: 'From Hama To Homs', time: '6:30 PM', price: '450000' })} />
-                  <DashCard title={'From Homs To Lattakia'} onClick={() => handleTripClick({ title: 'From Homs To Lattakia', time: '7:00 PM', price: '200000' })} />
-                  <DashCard title={'From Damascus To Alhasaka'} onClick={() => handleTripClick({ title: 'From Damascus To Alhasaka', time: '9:45 PM', price: '350000' })} />
-                  <DashCard title={'From Homs To Damascus'} onClick={() => handleTripClick({ title: 'From Homs To Damascus', time: '10:30 AM', price: '200000' })} />
-                  <DashCard title={'From Aleppo To Lattakia'} onClick={() => handleTripClick({ title: 'From Aleppo To Lattakia', time: '1:00 PM', price: '100000' })} />
+                  <DashCard title={'From Damascus To Homs'} onClick={() => handleTripClick({ title: 'From Damascus To Homs', time: '9:00 AM', price: '200000',date: '2024/2/13' })} />
+                  <DashCard title={'From Damascus To Hama'} onClick={() => handleTripClick({ title: 'From Damascus To Hama', time: '10:00 AM', price: '150000',date: '2024/2/20' })} />
+                  <DashCard title={'From Damascus To Tartous'} onClick={() => handleTripClick({ title: 'From Damascus To Tartous', time: '12:00 PM', price: '180000',date: '2024/2/25' })} />
+                  <DashCard title={'From Damascus To Aleppo'} onClick={() => handleTripClick({ title: 'From Damascus To Aleppo', time: '1:00 PM', price: '100000',date: '2024/2/11' })} />
+                  <DashCard title={'From Aleppo To Homs'} onClick={() => handleTripClick({ title: 'From Aleppo To Homs', time: '2:00 PM', price: '350000',date: '2024/2/15' })} />
+                  <DashCard title={'From Tartous To Damascus'} onClick={() => handleTripClick({ title: 'From Tartous To Damascus', time: '4:00 PM', price: '250000',date: '2024/3/14' })} />
+                  <DashCard title={'From Hama To Homs'} onClick={() => handleTripClick({ title: 'From Hama To Homs', time: '6:30 PM', price: '450000',date: '2024/3/20' })} />
+                  <DashCard title={'From Homs To Lattakia'} onClick={() => handleTripClick({ title: 'From Homs To Lattakia', time: '7:00 PM', price: '200000',date: '2024/3/25' })} />
+                  <DashCard title={'From Damascus To Alhasaka'} onClick={() => handleTripClick({ title: 'From Damascus To Alhasaka', time: '9:45 PM', price: '350000',date: '2024/3/29' })} />
+                  <DashCard title={'From Homs To Damascus'} onClick={() => handleTripClick({ title: 'From Homs To Damascus', time: '10:30 AM', price: '200000',date: '2024/4/18' })} />
+                  <DashCard title={'From Aleppo To Lattakia'} onClick={() => handleTripClick({ title: 'From Aleppo To Lattakia', time: '1:00 PM', price: '100000',date: '2024/4/12' })} />
                 </div>
 
                 {/* Users Table */}
@@ -118,9 +150,73 @@ const Dashboard = () => {
                     </table>
                 </div>
             </div>
+             {/* Modal for Adding Trip */}
+            {showTripModal && (
+                <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
+                    <div className='bg-white p-6 rounded-lg w-80'>
+                        <h2 className='text-xl font-semibold mb-4 text-center'>Add Trip</h2>
+                        <input type='text' value={tripTitle} onChange={(e) => setTripTitle(e.target.value)} placeholder='Trip Title'  className='w-full p-2 border border-gray-300 rounded-md mb-4'/>
+                        <input type='text' value={tripTime} onChange={(e) => setTripTime(e.target.value)} placeholder='Trip Time'  className='w-full p-2 border border-gray-300 rounded-md mb-4'/>
+                        <input type='text' value={tripPrice} onChange={(e) => setTripPrice(e.target.value)} placeholder='Trip Price' className='w-full p-2 border border-gray-300 rounded-md mb-4'/>
+                        <input type='text' value={tripDate} onChange={(e) => setTripDate(e.target.value)} placeholder='Trip Date' className='w-full p-2 border border-gray-300 rounded-md mb-4'/>
+                        <div className='flex justify-between'>
+                            <button onClick={() => { 
+                                if (!tripTitle) { 
+                                    alert('please enter trip title');
+                                }
+                                  else if (!tripTime) { 
+                                     alert('please enter trip time');
+                                  }
+                                  else if(!tripDate) {
+                                    alert('please enter trip date')
+                                  }
+                                  else if(!tripPrice){
+                                     alert('please enter trip price');
+                                  } else { 
+                                    console.log('Trip added:',{tripTitle,tripTime,tripPrice,tripDate});
+                                    setShowTripModal(false);
+                                    setTripTitle('');
+                                    setTripTime('');
+                                    setTripPrice('');
+                                    setTripDate('');
+                                  }
+                                }}
+                                  
+                                className='px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700'>
+                                Save
+                            </button>
+                            <button onClick={() => setShowTripModal(false)} className='px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700'>
+                                Cancel
+                            </button>
+                        </div>
+                       </div>
+                       </div>
+            )}
+
+            {/* Modal for User Details */}
+            {selectedUser && (
+                <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
+                    <div className='bg-white p-6 rounded-lg w-80'>
+                        <h2 className='text-xl font-semibold mb-4 text-center'>{selectedUser.name}</h2>
+                        <p><strong>Address:</strong> {selectedUser.address}</p>
+                        <p><strong>Phone:</strong> {selectedUser.phone}</p>
+                        {selectedUser.userStatus === 'Driver' && (
+                            <>
+                                <p><strong>Car Number:</strong> {selectedUser.carNumber}</p>
+                            </>
+                        )}
+                        <p><strong>Registration Date:</strong> {selectedUser.registrationDate}</p>
+                        <div className='flex justify-between mt-4'>
+                            <button onClick={() => setSelectedUser(null)} className='px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700'>
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Modal for Adding Car */}
-            {showModal && (
+            {showCarModal && (
                 <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
                     <div className='bg-white p-6 rounded-lg w-80'>
                         <h2 className='text-xl font-semibold mb-4 text-center'>Add Car</h2>
@@ -139,7 +235,7 @@ const Dashboard = () => {
                                      alert('please enter car color');
                                   } else { 
                                     console.log('Car added:',{carName,carNumber,carColor});
-                                    setShowModal(false);
+                                    setShowCarModal(false);
                                     setCarName('');
                                     setCarNumber('');
                                     setCarColor('');
@@ -149,7 +245,7 @@ const Dashboard = () => {
                                 className='px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700'>
                                 Save
                             </button>
-                            <button onClick={() => setShowModal(false)} className='px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700'>
+                            <button onClick={() => setShowCarModal(false)} className='px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700'>
                                 Cancel
                             </button>
                         </div>
@@ -163,6 +259,7 @@ const Dashboard = () => {
                         <h2 className='text-xl font-semibold mb-4 text-center'>{selectedTrip.title}</h2>
                         <p><strong>Time:</strong> {selectedTrip.time}</p>
                         <p><strong>Price:</strong> {selectedTrip.price}</p>
+                        <p><strong>Date:</strong> {selectedTrip.date}</p>
                         <div className='flex justify-between mt-4'>
                         <button 
                         onClick={() => setSelectedTrip(null)} 
@@ -182,4 +279,4 @@ const Dashboard = () => {
     );
 }
 
-export default Dashboard;
+export default Dashboard;  

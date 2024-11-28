@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-// import { Routes, Route } from 'react-router-dom'; 
-import { Link } from 'react-router-dom';
 import Sidebar from '../Components/Sidebar';
 import DashCard from '../Components/DashCard';
 import { BsFillStarFill } from "react-icons/bs";
@@ -79,9 +77,9 @@ const Dashboard = () => {
                 {/* Header Section */}
                 <div className='w-[90%] h-36 text-left mt-5'>
                     <h1 className='text-3xl font-semibold'>Dashboard</h1>
-                    <p className='text-xl font-thin'>Welcome to your dashboard</p>
+                    <p className='text-xl font-semibold'>Welcome to your dashboard</p>
                 </div>
-                
+
                 {/* Add Car Button */}
                 <button 
                     onClick={() => setShowCarModal(true)} // فتح النموذج لإضافة سيارة
@@ -207,7 +205,7 @@ const Dashboard = () => {
                         )}
                         <p><strong>Registration Date:</strong> {selectedUser.registrationDate}</p>
                         <div className='flex justify-between mt-4'>
-                            <button onClick={() => setSelectedUser(null)} className='px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700'>
+                            <button onClick={() => setSelectedUser(null)} className='px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-700'>
                                 Close
                             </button>
                         </div>
@@ -253,7 +251,7 @@ const Dashboard = () => {
                 </div>
             )}
            {/* Modal to Display Trip Details */}
-//             {selectedTrip && (
+           {selectedTrip && (
                 <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
                     <div className='bg-white p-6 rounded-lg w-80'>
                         <h2 className='text-xl font-semibold mb-4 text-center'>{selectedTrip.title}</h2>

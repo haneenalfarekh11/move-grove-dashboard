@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from '../Components/Sidebar';
 import DashCard from '../Components/DashCard';
 import { BsFillStarFill } from "react-icons/bs";
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
     const [open, setOpen] = useState(false); // التحكم في Sidebar
@@ -79,6 +80,11 @@ const Dashboard = () => {
                     <h1 className='text-3xl font-semibold'>Dashboard</h1>
                     <p className='text-xl font-semibold'>Welcome to your dashboard</p>
                 </div>
+                {/* <Link to="/menu">
+          <button className="px-4 py-2 bg-yellow-500 text-white rounded-md shadow-lg hover:bg-yellow-700">
+            Open Menu
+          </button>
+        </Link> */}
 
                 {/* Add Car Button */}
                 <button 
@@ -258,16 +264,26 @@ const Dashboard = () => {
                         <p><strong>Time:</strong> {selectedTrip.time}</p>
                         <p><strong>Price:</strong> {selectedTrip.price}</p>
                         <p><strong>Date:</strong> {selectedTrip.date}</p>
-                        <div className='flex justify-between mt-4'>
+                        <div className=' grid grid-cols-2 gap-6'>
                         <button 
                         onClick={() => setSelectedTrip(null)} 
-                        className='mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700 mr-9'>
-                         Close
+                        className=' px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700'>
+                         Pending
                        </button>
                        <button 
                          onClick={() => setSelectedTrip(null)} 
-                        className='mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700'>
+                        className=' px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700'>
+                        Available
+                       </button>
+                       <button 
+                         onClick={() => setSelectedTrip(null)} 
+                        className=' px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700'>
                         Done
+                       </button>
+                       <button 
+                         onClick={() => setSelectedTrip(null)} 
+                        className=' px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700'>
+                        Cancelled
                        </button>
                     </div>
                 </div>

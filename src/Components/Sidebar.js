@@ -15,7 +15,7 @@ const Sidebar = () => {
             <p className={`${isOpen ? '' : 'hidden'}`}>Dashboard</p>
           
             </button></Link>
-            <Link to="/products" className=' w-[95%] h-[10%]'>
+            <Link to="/All-Trips" className=' w-[95%] h-[10%]'>
             <button className={`flex ${isOpen ? 'justify-between' : 'justify-center'} items-center w-[95%] h-[15%] text-lg hover:text-gray-300`}>
             <p className={`${isOpen ? '' : 'hidden'}`}>All Trips</p>
             

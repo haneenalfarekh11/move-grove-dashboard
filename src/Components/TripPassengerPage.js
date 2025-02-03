@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 const TripPassengerPage = () => {
  
   const tableData = [
@@ -32,6 +32,13 @@ const TripPassengerPage = () => {
           ))}
         </tbody>
       </table>
+      <div className="text-left mt-4">
+      <Link to="/Menu">
+          <button className='px-4 py-2 bg-yellow-500 text-white rounded-md shadow-lg hover:bg-yellow-700'>
+          Back To Menu
+          </button>
+          </Link>
+          </div>
     </div>
   );
 };

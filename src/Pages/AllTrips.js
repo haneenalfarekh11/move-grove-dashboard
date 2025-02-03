@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Sidebar from '../Components/Sidebar'
+import { Link } from 'react-router-dom';
 
 const AllTrips = () => {
     const [open, setOpen] = useState(false);
@@ -9,14 +10,14 @@ const AllTrips = () => {
     { title: 'From Damascus To Tartous', status: 'Available', time: '12:00 PM', price: '180000', date: '2024/2/25' },
     { title: 'From Damascus To Aleppo', status: 'Unavailable', time: '1:00 PM', price: '100000', date: '2024/2/11' },
     { title: 'From Aleppo To Homs', status: 'Available', time: '2:00 PM', price: '350000', date: '2024/2/15' },
-
-  ]);
-
+    { title: 'From Aleppo To Homs', status: 'Available', time: '2:00 PM', price: '350000', date: '2024/2/15' },
+    { title: 'From Aleppo To Homs', status: 'Available', time: '2:00 PM', price: '350000', date: '2024/2/15' },
+    ]);
   return (
     <div className="w-full min-h-screen bg-yellow-100 p-6">
-        <div  className={` ${window.open ? "w-60   " : "w-8 " } h-full relative duration-300 `}onMouseEnter={()=>setOpen(true)} onMouseLeave={()=>setOpen(false)}>
+        {/* <div  className={` ${window.open ? "w-60   " : "w-8 " } h-full relative duration-300 `}onMouseEnter={()=>setOpen(true)} onMouseLeave={()=>setOpen(false)}>
     <Sidebar/>
-    </div>
+    </div> */}
       <h1 className="text-3xl font-semibold">All Trips</h1>
       <table className="w-full mt-6 table-auto border-collapse">
         <thead>
@@ -40,6 +41,20 @@ const AllTrips = () => {
           ))}
         </tbody>
       </table>
+      <div className='text-right mt-4'>
+      <Link to="/Menu">
+                <button className='px-4 py-2 bg-yellow-500 text-white rounded-md shadow-lg hover:bg-yellow-700'>
+                  View Menu
+                </button>
+              </Link>
+              </div>
+              <div className='text-left mt-4'>
+      <Link to="/Dashboard">
+        <button className="px-4 py-2 bg-yellow-500 text-white rounded-md shadow-lg hover:bg-yellow-700 mt-6">
+          Back to Dashboard
+        </button>
+      </Link>
+      </div>
     </div>
   );
 };

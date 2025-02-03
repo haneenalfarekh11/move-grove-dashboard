@@ -1,12 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const CityPage = () => {
   
   const tableData = [
-    { id: 1, name: "New York", population: 8419600, area: 789, country: "USA" },
-    { id: 2, name: "London", population: 8982000, area: 1572, country: "UK" },
-    { id: 3, name: "Tokyo", population: 13929286, area: 2191, country: "Japan" },
-    { id: 4, name: "Paris", population: 2148000, area: 105, country: "France" },
+    { id: 1, name: "Damascuse", population: 841600, area: 789 },
+    { id: 2, name: "Homs", population: 89800, area: 1572 },
+    { id: 3, name: "Lattakia", population: 139986, area: 2191 },
+    { id: 4, name: "Hama", population: 21400, area: 105 },
   ];
 
   return (
@@ -32,6 +33,13 @@ const CityPage = () => {
           ))}
         </tbody>
       </table>
+      <div className="text-left mt-4">
+  <Link to="/Menu">
+    <button className='px-4 py-2 bg-yellow-500 text-white rounded-md shadow-lg hover:bg-yellow-700'>
+      Back To Menu
+    </button>
+  </Link>
+</div>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from '../Components/Sidebar';
 import DashCard from '../Components/DashCard';
 import { BsFillStarFill } from "react-icons/bs";
-import { Link } from 'react-router-dom';
+
 
 const Dashboard = () => {
     const [open, setOpen] = useState(false); // التحكم في Sidebar
@@ -27,7 +27,8 @@ const Dashboard = () => {
         { title: 'From Damascus To Homs', time: '9:00 AM', price: '200000', date: '2024/2/13' },
         { title: 'From Damascus To Hama', time: '10:00 AM', price: '150000', date: '2024/2/20' },
         { title: 'From Damascus To Tartous', time: '12:00 PM', price: '180000', date: '2024/2/25' },
-    ]);
+    ]); 
+
 
     // دالة لفتح تفاصيل الرحلة
     const handleTripClick = (trip) => {
@@ -76,29 +77,28 @@ const Dashboard = () => {
 
             <div className='w-[100%] pl-6 flex justify-center items-center flex-col'>
                 {/* Header Section */}
-                <div className='w-[90%] h-36 text-left mt-5'>
+                <div className='w-[90%] h-36 text-left mt-5 float-in'>
                     <h1 className='text-3xl font-semibold'>Dashboard</h1>
                     <p className='text-xl font-semibold'>Welcome to your dashboard</p>
                 </div>
-                {/* <Link to="/menu">
-          <button className="px-4 py-2 bg-yellow-500 text-white rounded-md shadow-lg hover:bg-yellow-700">
-            Open Menu
-          </button>
-        </Link> */}
 
-                {/* Add Car Button */}
+                {/* Add Car Button */} 
+                <div className='text-left mt-4'>
                 <button 
                     onClick={() => setShowCarModal(true)} // فتح النموذج لإضافة سيارة
                     className='px-4 py-2 bg-yellow-500 text-white rounded-md shadow-lg hover:bg-yellow-700'>
                     Add Car
                 </button>
+                </div> 
+               
                 {/* add trip button*/}
-                <div className='fixed top-0 right-0 p-4'></div>
+                <div className='text-center mt-4'>
                 <button
                     onClick={() => setShowTripModal(true)}
                     className='px-4 py-2 bg-yellow-500 text-white rounded-md shadow-lg hover:bg-yellow-700 ml-auto '>
                     Add Trip
                 </button>
+                </div>
 
                 {/* Cards Section */}
                 <div className='w-[90%] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8'>

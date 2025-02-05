@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Sidebar from '../Components/Sidebar';
 import DashCard from '../Components/DashCard';
+import CarModal from '../Components/CarModal';  
+import TripModal from '../Components/TripModal';  
 import { BsFillStarFill } from "react-icons/bs";
 
 
@@ -8,14 +10,11 @@ const Dashboard = () => {
     const [open, setOpen] = useState(false); // التحكم في Sidebar
     const [showCarModal, setShowCarModal] = useState(false); // فتح نموذج إضافة سيارة
     const [showTripModal, setShowTripModal] = useState(false);
-    const [carName, setCarName] = useState(''); 
-    const [carNumber, setCarNumber] = useState('');
-    const [carColor, setCarColor] = useState('');
     const [tripTitle, setTripTitle] = useState('');
     const [tripTime, setTripTime] = useState('');
     const [tripPrice, setTripPrice] = useState('');
     const [tripDate, setTripDate] = useState('');
-    const [selectedTrip, setSelectedTrip] = useState(null); //  حالة تفاصيل الرحلة
+    const [selectedTrip, setSelectedTrip] = useState(null);   //حالة تفاصيل الرحلة
     const [selectedUser, setSelectedUser] = useState(null);
     const [users, setUsers] = useState([ // بيانات المستخدمين المتفاعلين
         { id: 1, name: 'Haneen Alfarekh ', phone: '0997876643', userStatus: '??',address: 'Damascus', carNumber: '12345', registrationDate: '2022-1-01' },
@@ -32,9 +31,10 @@ const Dashboard = () => {
 
     // دالة لفتح تفاصيل الرحلة
     const handleTripClick = (trip) => {
-        setSelectedTrip(trip); // تحديث حالة الرحلة المحددة
+        setSelectedTrip(trip); //تحديث حالة الرحلة المحددة
+        
+        
     };
-
     // دالة لعرض تفاصيل المستخدم
     const handleUserView = (user) => {
         // console.log('View user:', user); // منطق عرض تفاصيل المستخدم
@@ -59,12 +59,10 @@ const Dashboard = () => {
             price: tripPrice,
             date: tripDate,
         };
+ 
         setTrips([...trips, newTrip]); // إضافة الرحلة إلى قائمة الرحلات
-        setShowTripModal(false); // إغلاق نموذج إضافة الرحلة
-        setTripTitle(''); // إعادة تعيين القيم
-        setTripTime('');
-        setTripPrice('');
-        setTripDate('');
+       
+        
     };
 
     return (
@@ -80,7 +78,9 @@ const Dashboard = () => {
                 <div className='w-[90%] h-36 text-left mt-5 float-in'>
                     <h1 className='text-3xl font-semibold'>Dashboard</h1>
                     <p className='text-xl font-semibold'>Welcome to your dashboard</p>
+                    
                 </div>
+                
 
                 {/* Add Car Button */} 
                 <div className='text-left mt-4'>
@@ -89,6 +89,7 @@ const Dashboard = () => {
                     className='px-4 py-2 bg-yellow-500 text-white rounded-md shadow-lg hover:bg-yellow-700'>
                     Add Car
                 </button>
+                <CarModal showCarModal={showCarModal} setShowCarModal={setShowCarModal} />
                 </div> 
                
                 {/* add trip button*/}
@@ -98,6 +99,7 @@ const Dashboard = () => {
                     className='px-4 py-2 bg-yellow-500 text-white rounded-md shadow-lg hover:bg-yellow-700 ml-auto '>
                     Add Trip
                 </button>
+                <TripModal showTripModal={showTripModal} setShowTripModal={setShowTripModal} addTrip={handleAddTrip} />
                 </div>
 
                 {/* Cards Section */}
@@ -154,49 +156,7 @@ const Dashboard = () => {
                     </table>
                 </div>
             </div>
-             {/* Modal for Adding Trip */}
-            {showTripModal && (
-                <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
-                    <div className='bg-white p-6 rounded-lg w-80'>
-                        <h2 className='text-xl font-semibold mb-4 text-center'>Add Trip</h2>
-                        <input type='text' value={tripTitle} onChange={(e) => setTripTitle(e.target.value)} placeholder='Trip Title'  className='w-full p-2 border border-gray-300 rounded-md mb-4'/>
-                        <input type='text' value={tripTime} onChange={(e) => setTripTime(e.target.value)} placeholder='Trip Time'  className='w-full p-2 border border-gray-300 rounded-md mb-4'/>
-                        <input type='text' value={tripPrice} onChange={(e) => setTripPrice(e.target.value)} placeholder='Trip Price' className='w-full p-2 border border-gray-300 rounded-md mb-4'/>
-                        <input type='text' value={tripDate} onChange={(e) => setTripDate(e.target.value)} placeholder='Trip Date' className='w-full p-2 border border-gray-300 rounded-md mb-4'/>
-                        <div className='flex justify-between'>
-                            <button onClick={() => { 
-                                if (!tripTitle) { 
-                                    alert('please enter trip title');
-                                }
-                                  else if (!tripTime) { 
-                                     alert('please enter trip time');
-                                  }
-                                  else if(!tripDate) {
-                                    alert('please enter trip date')
-                                  }
-                                  else if(!tripPrice){
-                                     alert('please enter trip price');
-                                  } else { 
-                                    console.log('Trip added:',{tripTitle,tripTime,tripPrice,tripDate});
-                                    setShowTripModal(false);
-                                    setTripTitle('');
-                                    setTripTime('');
-                                    setTripPrice('');
-                                    setTripDate('');
-                                  }
-                                }}
-                                  
-                                className='px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700'>
-                                Save
-                            </button>
-                            <button onClick={() => setShowTripModal(false)} className='px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700'>
-                                Cancel
-                            </button>
-                        </div>
-                       </div>
-                       </div>
-            )}
-
+        
             {/* Modal for User Details */}
             {selectedUser && (
                 <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
@@ -219,43 +179,6 @@ const Dashboard = () => {
                 </div>
             )}
 
-            {/* Modal for Adding Car */}
-            {showCarModal && (
-                <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
-                    <div className='bg-white p-6 rounded-lg w-80'>
-                        <h2 className='text-xl font-semibold mb-4 text-center'>Add Car</h2>
-                        <input type='text' value={carName} onChange={(e) => setCarName(e.target.value)} placeholder='Car Name' className='w-full p-2 border border-gray-300 rounded-md mb-4'/>
-                        <input type='text' value={carNumber} onChange={(e) => setCarNumber(e.target.value)} placeholder='Car Number' className='w-full p-2 border border-gray-300 rounded-md mb-4'/>
-                        <input type='text' value={carColor} onChange={(e) => setCarColor(e.target.value)} placeholder='Car Color' className='w-full p-2 border border-gray-300 rounded-md mb-4'/>
-                        <div className='flex justify-between'>
-                            <button onClick={() => { 
-                                if (!carName) { 
-                                    alert('please enter car name');
-                                }
-                                  else if (!carNumber) { 
-                                     alert('please enter car number');
-                                  }
-                                  else if(!carColor){
-                                     alert('please enter car color');
-                                  } else { 
-                                    console.log('Car added:',{carName,carNumber,carColor});
-                                    setShowCarModal(false);
-                                    setCarName('');
-                                    setCarNumber('');
-                                    setCarColor('');
-                                  }
-                                }}
-                                  
-                                className='px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700'>
-                                Save
-                            </button>
-                            <button onClick={() => setShowCarModal(false)} className='px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700'>
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
            {/* Modal to Display Trip Details */}
            {selectedTrip && (
                 <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
@@ -284,11 +207,12 @@ const Dashboard = () => {
                          onClick={() => setSelectedTrip(null)} 
                         className=' px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700'>
                         Cancelled
-                       </button>
+                        </button>
                     </div>
                 </div>
         </div>
     )} 
+        
         </div>
     );
 }
